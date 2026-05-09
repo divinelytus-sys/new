@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PlenaMente — Salud Mental, Vida Plena</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F7F3EC;
+      --bg2: #EDE8DF;
+      --surface: #FFFFFF;
+      --text: #1A2B22;
+      --text-soft: #4A5E52;
+      --text-muted: #8A9E92;
+      --green-dark: #1B4332;
+      --green-mid: #2D6A4F;
+      --teal: #0D7377;
+      --teal-light: #148C92;
+      --mauve: #7B3F54;
+      --gold: #C9A84C;
+      --border: rgba(27,67,50,0.12);
+      --shadow: 0 20px 60px rgba(27,67,50,0.10);
+      --shadow-sm: 0 4px 20px rgba(27,67,50,0.08);
+      --radius: 20px;
+      --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    [data-theme="dark"] {
+      --bg: #0F1A14;
+      --bg2: #162010;
+      --surface: #1C2B21;
+      --text: #E8F0E9;
+      --text-soft: #A8C0A9;
+      --text-muted: #5A7A5C;
+      --green-dark: #3D8B64;
+      --green-mid: #52B788;
+      --teal: #2DD4D8;
+      --teal-light: #4AEAEE;
+      --mauve: #C07A90;
+      --gold: #E8C87A;
+      --border: rgba(82,183,136,0.15);
+      --shadow: 0 20px 60px rgba(0,0,0,0.4);
+      --shadow-sm: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      transition: background 0.4s, color 0.4s;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg2); }
+    ::-webkit-scrollbar-thumb { background: var(--green-mid); border-radius: 3px; }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 18px 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      backdrop-filter: blur(18px);
+      background: rgba(247,243,236,0.85);
+      border-bottom: 1px solid var(--border);
+      transition: var(--transition);
+    }
+    [data-theme="dark"] nav {
+      background: rgba(15,26,20,0.88);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+    .nav-logo-svg { width: 42px; height: 34px; }
+    .nav-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem; font-weight: 600;
+      color: var(--green-dark);
+      letter-spacing: -0.02em;
+    }
+    .nav-links {
+      display: flex; gap: 36px; list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.85rem; font-weight: 500;
+      color: var(--text-soft);
+      text-decoration: none; letter-spacing: 0.04em; text-transform: uppercase;
+      position: relative; transition: color 0.3s;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -3px; left: 0;
+      width: 0; height: 1.5px;
+      background: var(--teal);
+      transition: width 0.3s;
+    }
+    .nav-links a:hover { color: var(--teal); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .theme-btn {
+      background: none; border: 1px solid var(--border);
+      border-radius: 50px; padding: 7px 14px;
+      cursor: pointer; font-size: 0.8rem; font-weight: 500;
+      color: var(--text-soft); transition: var(--transition);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .theme-btn:hover { border-color: var(--teal); color: var(--teal); }
+    .nav-cta {
+      background: var(--green-dark); color: #fff;
+      padding: 10px 24px; border-radius: 50px;
+      text-decoration: none; font-size: 0.85rem; font-weight: 600;
+      transition: var(--transition); border: none; cursor: pointer;
+      letter-spacing: 0.02em;
+    }
+    .nav-cta:hover {
+      background: var(--green-mid);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 25px rgba(27,67,50,0.3);
+    }
+    .hamburger { display: none; flex-direction: column; gap: 4px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: 0.3s; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 120px 5% 80px;
+      position: relative; overflow: hidden;
+      text-align: center;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(13,115,119,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 20% 80%, rgba(27,67,50,0.08) 0%, transparent 50%),
+        radial-gradient(ellipse 40% 30% at 80% 70%, rgba(123,63,84,0.06) 0%, transparent 50%);
+    }
+    .hero-rings {
+      position: absolute; inset: 0; z-index: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .ring {
+      position: absolute; border-radius: 50%;
+      border: 1px solid rgba(13,115,119,0.08);
+      animation: pulse-ring 6s ease-in-out infinite;
+    }
+    .ring:nth-child(1) { width: 400px; height: 400px; animation-delay: 0s; }
+    .ring:nth-child(2) { width: 600px; height: 600px; animation-delay: 1.5s; }
+    .ring:nth-child(3) { width: 800px; height: 800px; animation-delay: 3s; }
+    @keyframes pulse-ring {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 0.12; transform: scale(1.03); }
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 780px; }
+    .hero-logo {
+      width: 100px; height: auto; margin-bottom: 28px;
+      animation: float-lotus 6s ease-in-out infinite;
+    }
+    @keyframes float-lotus {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    .hero-eyebrow {
+      font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--teal); font-weight: 600; margin-bottom: 18px;
+      opacity: 0; animation: fade-up 0.8s 0.3s forwards;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.2rem, 7vw, 6rem);
+      font-weight: 300; line-height: 1.05;
+      color: var(--green-dark);
+      margin-bottom: 24px;
+      opacity: 0; animation: fade-up 0.9s 0.5s forwards;
+    }
+    .hero-title em { font-style: italic; color: var(--teal); }
+    .hero-subtitle {
+      font-size: 1.05rem; font-weight: 300; line-height: 1.8;
+      color: var(--text-soft); max-width: 560px; margin: 0 auto 40px;
+      opacity: 0; animation: fade-up 0.9s 0.7s forwards;
+    }
+    .hero-buttons {
+      display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+      opacity: 0; animation: fade-up 0.9s 0.9s forwards;
+    }
+    .btn-primary {
+      background: var(--green-dark); color: #fff;
+      padding: 16px 40px; border-radius: 50px;
+      text-decoration: none; font-size: 0.9rem; font-weight: 600;
+      transition: var(--transition); display: inline-block;
+      box-shadow: 0 8px 30px rgba(27,67,50,0.25);
+    }
+    .btn-primary:hover {
+      background: var(--green-mid); transform: translateY(-2px);
+      box-shadow: 0 14px 40px rgba(27,67,50,0.35);
+    }
+    .btn-outline {
+      border: 1.5px solid var(--teal); color: var(--teal);
+      padding: 16px 40px; border-radius: 50px;
+      text-decoration: none; font-size: 0.9rem; font-weight: 600;
+      transition: var(--transition); display: inline-block;
+    }
+    .btn-outline:hover {
+      background: var(--teal); color: #fff; transform: translateY(-2px);
+    }
+    .hero-stats {
+      display: flex; gap: 48px; justify-content: center;
+      margin-top: 60px; padding-top: 40px;
+      border-top: 1px solid var(--border);
+      opacity: 0; animation: fade-up 0.9s 1.1s forwards;
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem; font-weight: 600;
+      color: var(--green-dark); display: block; line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-muted); margin-top: 6px; display: block;
+    }
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── MARQUEE STRIP ── */
+    .marquee-strip {
+      overflow: hidden; background: var(--green-dark); padding: 14px 0;
+      position: relative; z-index: 2;
+    }
+    .marquee-track {
+      display: flex; gap: 60px;
+      animation: marquee 28s linear infinite; width: max-content;
+    }
+    .marquee-strip:hover .marquee-track { animation-play-state: paused; }
+    .marquee-item {
+      font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(255,255,255,0.65); white-space: nowrap; font-weight: 500;
+      display: flex; align-items: center; gap: 20px;
+    }
+    .marquee-item::after { content: '✦'; color: var(--gold); opacity: 0.7; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ── SECTION BASE ── */
+    section { padding: 100px 5%; }
+    .section-label {
+      font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--teal); font-weight: 600; margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      font-weight: 400; line-height: 1.15;
+      color: var(--green-dark); margin-bottom: 16px;
+    }
+    .section-title em { font-style: italic; color: var(--teal); }
+    .section-desc {
+      font-size: 1rem; line-height: 1.8; color: var(--text-soft);
+      max-width: 580px; font-weight: 300;
+    }
+    .section-header { margin-bottom: 64px; }
+
+    /* Reveal animations */
+    .reveal {
+      opacity: 0; transform: translateY(36px);
+      transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ── ABOUT ── */
+    .about { background: var(--surface); }
+    .about-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .about-visual {
+      position: relative; display: flex; align-items: center; justify-content: center;
+    }
+    .about-lotus-wrap {
+      width: 280px; height: 280px;
+      background: var(--bg2);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      position: relative;
+      box-shadow: 0 30px 80px rgba(27,67,50,0.12), 0 0 0 1px var(--border);
+    }
+    .about-lotus-wrap svg { width: 160px; height: auto; }
+    .about-badge {
+      position: absolute; bottom: 10px; right: -20px;
+      background: var(--teal); color: #fff;
+      padding: 12px 20px; border-radius: 14px;
+      font-size: 0.78rem; font-weight: 600;
+      box-shadow: 0 8px 25px rgba(13,115,119,0.4);
+      text-align: center; line-height: 1.4;
+    }
+    .about-text .section-desc { max-width: 480px; }
+    .about-values {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 36px;
+    }
+    .value-item {
+      padding: 18px; border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      transition: var(--transition);
+    }
+    .value-item:hover {
+      border-color: var(--teal);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+    .value-icon { font-size: 1.4rem; margin-bottom: 8px; }
+    .value-name { font-size: 0.85rem; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .value-desc { font-size: 0.78rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* ── SERVICES ── */
+    .services { background: var(--bg2); }
+    .services-inner { max-width: 1200px; margin: 0 auto; }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+    .service-card {
+      background: var(--surface); border-radius: var(--radius);
+      padding: 36px 28px; border: 1px solid var(--border);
+      transition: var(--transition); position: relative; overflow: hidden;
+    }
+    .service-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; background: linear-gradient(90deg, var(--teal), var(--green-mid));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    .service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-icon {
+      width: 56px; height: 56px; border-radius: 16px;
+      background: linear-gradient(135deg, rgba(13,115,119,0.12), rgba(27,67,50,0.08));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; margin-bottom: 20px;
+    }
+    .service-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; font-weight: 600; color: var(--green-dark);
+      margin-bottom: 12px;
+    }
+    .service-desc {
+      font-size: 0.88rem; line-height: 1.75; color: var(--text-soft);
+      font-weight: 300;
+    }
+    .service-tag {
+      display: inline-block; margin-top: 18px;
+      background: rgba(13,115,119,0.1); color: var(--teal);
+      padding: 5px 14px; border-radius: 50px;
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em;
+    }
+
+    /* ── PRICING ── */
+    .pricing { background: var(--surface); }
+    .pricing-inner { max-width: 1000px; margin: 0 auto; }
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+      align-items: start;
+    }
+    .price-card {
+      border-radius: var(--radius); padding: 36px 28px;
+      border: 1px solid var(--border); background: var(--bg);
+      position: relative; transition: var(--transition);
+    }
+    .price-card:hover { box-shadow: var(--shadow); transform: translateY(-4px); }
+    .price-card.featured {
+      background: var(--green-dark); border-color: var(--green-dark);
+      transform: scale(1.04);
+    }
+    .price-card.featured:hover { transform: scale(1.04) translateY(-4px); }
+    .price-card.featured .price-name,
+    .price-card.featured .price-amount,
+    .price-card.featured .price-sessions,
+    .price-card.featured .price-feature { color: rgba(255,255,255,0.9); }
+    .price-card.featured .price-period { color: rgba(255,255,255,0.6); }
+    .price-card.featured .price-divider { border-color: rgba(255,255,255,0.15); }
+    .price-badge {
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background: var(--gold); color: var(--green-dark);
+      padding: 5px 18px; border-radius: 50px;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .price-name {
+      font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-muted); font-weight: 600; margin-bottom: 20px;
+    }
+    .price-amount {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem; font-weight: 600; color: var(--green-dark);
+      line-height: 1; display: flex; align-items: flex-start; gap: 4px;
+    }
+    .price-currency { font-size: 1.4rem; margin-top: 8px; }
+    .price-period {
+      font-size: 0.8rem; color: var(--text-muted);
+      margin-top: 6px; margin-bottom: 4px;
+    }
+    .price-usd {
+      font-size: 0.82rem; color: var(--teal);
+      font-weight: 500; margin-bottom: 18px;
+    }
+    .price-sessions {
+      font-size: 0.85rem; color: var(--text-soft);
+      margin-bottom: 18px; font-weight: 500;
+    }
+    .price-divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+    .price-features { list-style: none; margin-bottom: 28px; }
+    .price-feature {
+      font-size: 0.83rem; color: var(--text-soft); padding: 6px 0;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .price-feature::before { content: '✓'; color: var(--teal); font-weight: 700; font-size: 0.9rem; }
+    .price-card.featured .price-feature::before { color: var(--gold); }
+    .btn-book {
+      width: 100%; padding: 14px;
+      border-radius: 50px; border: 1.5px solid var(--green-dark);
+      background: transparent; color: var(--green-dark);
+      font-size: 0.85rem; font-weight: 600;
+      cursor: pointer; transition: var(--transition);
+      text-align: center; text-decoration: none; display: block;
+    }
+    .btn-book:hover { background: var(--green-dark); color: #fff; }
+    .price-card.featured .btn-book {
+      background: rgba(255,255,255,0.15); color: #fff;
+      border-color: rgba(255,255,255,0.4);
+    }
+    .price-card.featured .btn-book:hover { background: rgba(255,255,255,0.25); }
+    .pricing-note {
+      text-align: center; margin-top: 40px;
+      font-size: 0.83rem; color: var(--text-muted); line-height: 1.7;
+    }
+    .pricing-note a { color: var(--teal); text-decoration: none; font-weight: 500; }
+
+    /* ── HOW IT WORKS ── */
+    .how { background: var(--bg2); }
+    .how-inner { max-width: 1100px; margin: 0 auto; }
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+      position: relative;
+    }
+    .steps-grid::before {
+      content: ''; position: absolute;
+      top: 36px; left: calc(12.5% + 16px); right: calc(12.5% + 16px);
+      height: 1px; background: var(--border);
+      z-index: 0;
+    }
+    .step-card {
+      text-align: center; padding: 28px 16px; position: relative; z-index: 1;
+    }
+    .step-num {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--surface); border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; font-weight: 600; color: var(--teal);
+      transition: var(--transition);
+    }
+    .step-card:hover .step-num {
+      background: var(--teal); color: #fff;
+      border-color: var(--teal);
+      transform: scale(1.1);
+    }
+    .step-title {
+      font-size: 0.92rem; font-weight: 600; color: var(--text);
+      margin-bottom: 10px;
+    }
+    .step-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.7; }
+
+    /* ── PAYMENT ── */
+    .payment { background: var(--surface); }
+    .payment-inner { max-width: 900px; margin: 0 auto; }
+    .payment-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; margin-top: 48px; }
+    .payment-card {
+      padding: 36px; border-radius: var(--radius);
+      border: 1px solid var(--border); background: var(--bg);
+      transition: var(--transition);
+    }
+    .payment-card:hover { box-shadow: var(--shadow-sm); border-color: var(--teal); }
+    .payment-icon {
+      font-size: 2rem; margin-bottom: 16px;
+    }
+    .payment-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 600; color: var(--green-dark);
+      margin-bottom: 16px;
+    }
+    .bank-detail {
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .bank-row {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      padding: 10px 0; border-bottom: 1px solid var(--border);
+    }
+    .bank-row:last-child { border-bottom: none; }
+    .bank-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; }
+    .bank-value { font-size: 0.88rem; color: var(--text); font-weight: 500; text-align: right; max-width: 200px; }
+    .bank-copy {
+      background: none; border: none; cursor: pointer;
+      color: var(--teal); font-size: 0.75rem; font-weight: 600;
+      transition: 0.2s; padding: 0 4px;
+    }
+    .bank-copy:hover { color: var(--green-dark); }
+    .payment-note {
+      margin-top: 16px; padding: 14px; border-radius: 10px;
+      background: rgba(13,115,119,0.08); border: 1px solid rgba(13,115,119,0.15);
+      font-size: 0.82rem; color: var(--teal); line-height: 1.6;
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials { background: var(--bg2); }
+    .testimonials-inner { max-width: 1100px; margin: 0 auto; }
+    .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .testi-card {
+      background: var(--surface); padding: 32px 28px;
+      border-radius: var(--radius); border: 1px solid var(--border);
+      transition: var(--transition);
+    }
+    .testi-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-sm); }
+    .testi-stars { color: var(--gold); font-size: 0.85rem; margin-bottom: 16px; letter-spacing: 2px; }
+    .testi-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.08rem; line-height: 1.7; color: var(--text);
+      font-style: italic; margin-bottom: 20px;
+    }
+    .testi-author { display: flex; align-items: center; gap: 12px; }
+    .testi-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), var(--green-mid));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; font-weight: 700; color: #fff;
+    }
+    .testi-name { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+    .testi-info { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+
+    /* ── CONTACT / FAQ ── */
+    .contact { background: var(--surface); }
+    .contact-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1.2fr; gap: 72px;
+    }
+    .contact-info .section-desc { margin-bottom: 36px; }
+    .contact-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      margin-bottom: 22px;
+    }
+    .contact-ic {
+      width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
+      background: rgba(13,115,119,0.1);
+      display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+    }
+    .contact-item-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+    .contact-item-val { font-size: 0.9rem; color: var(--text); font-weight: 500; }
+    .contact-item-val a { color: var(--teal); text-decoration: none; }
+
+    /* FORM */
+    .form-card {
+      background: var(--bg); border-radius: var(--radius);
+      padding: 44px; border: 1px solid var(--border);
+    }
+    .form-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem; color: var(--green-dark); margin-bottom: 28px;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label {
+      display: block; font-size: 0.78rem; font-weight: 600;
+      color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%; padding: 13px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px; background: var(--surface);
+      color: var(--text); font-family: 'Nunito', sans-serif; font-size: 0.88rem;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      outline: none; appearance: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(13,115,119,0.1);
+    }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-submit {
+      width: 100%; padding: 16px;
+      background: var(--green-dark); color: #fff;
+      border: none; border-radius: 50px;
+      font-family: 'Nunito', sans-serif; font-size: 0.92rem; font-weight: 600;
+      cursor: pointer; transition: var(--transition);
+      letter-spacing: 0.04em;
+    }
+    .form-submit:hover {
+      background: var(--green-mid); transform: translateY(-1px);
+      box-shadow: 0 10px 30px rgba(27,67,50,0.3);
+    }
+    .form-privacy {
+      text-align: center; margin-top: 14px;
+      font-size: 0.74rem; color: var(--text-muted); line-height: 1.6;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--green-dark); color: rgba(255,255,255,0.7);
+      padding: 64px 5% 36px;
+    }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-top {
+      display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 48px;
+      padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .footer-brand .nav-brand { color: rgba(255,255,255,0.95); font-size: 1.8rem; }
+    .footer-slogan {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem; color: rgba(255,255,255,0.5); font-style: italic;
+      margin: 8px 0 20px;
+    }
+    .footer-social { display: flex; gap: 10px; margin-top: 16px; }
+    .social-btn {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; color: rgba(255,255,255,0.6);
+      text-decoration: none; transition: 0.3s;
+    }
+    .social-btn:hover { background: rgba(255,255,255,0.15); color: #fff; }
+    .footer-col h4 {
+      font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(255,255,255,0.9); font-weight: 600; margin-bottom: 20px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col a {
+      font-size: 0.85rem; color: rgba(255,255,255,0.55);
+      text-decoration: none; transition: color 0.3s;
+    }
+    .footer-col a:hover { color: rgba(255,255,255,0.95); }
+    .footer-bottom {
+      padding-top: 28px; display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 16px;
+    }
+    .footer-copy { font-size: 0.78rem; color: rgba(255,255,255,0.4); }
+    .footer-legal { display: flex; gap: 24px; }
+    .footer-legal a { font-size: 0.78rem; color: rgba(255,255,255,0.4); text-decoration: none; }
+    .footer-legal a:hover { color: rgba(255,255,255,0.7); }
+
+    /* ── SUCCESS TOAST ── */
+    .toast {
+      position: fixed; bottom: 30px; right: 30px; z-index: 9999;
+      background: var(--green-dark); color: #fff;
+      padding: 16px 24px; border-radius: 14px;
+      font-size: 0.88rem; font-weight: 500;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+      transform: translateY(100px); opacity: 0;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    /* ════════════════════════════════════
+       RESPONSIVE — TABLET  ≤ 1100px
+    ════════════════════════════════════ */
+    @media (max-width: 1100px) {
+      .services-grid  { grid-template-columns: repeat(2, 1fr); }
+      .pricing-grid   { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      .testi-grid     { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+      .footer-top     { grid-template-columns: 1.2fr 1fr 1fr; gap: 36px; }
+      .footer-top > .footer-brand { grid-column: 1 / -1; }
+      .about-inner    { gap: 48px; }
+    }
+
+    /* ════════════════════════════════════
+       RESPONSIVE — TABLET  ≤ 900px
+    ════════════════════════════════════ */
+    @media (max-width: 900px) {
+      /* NAV */
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      nav.menu-open .nav-links {
+        display: flex; flex-direction: column;
+        position: fixed; top: 68px; left: 0; right: 0;
+        background: var(--surface);
+        padding: 20px 24px 28px; gap: 20px;
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+        z-index: 999;
+      }
+      nav.menu-open .nav-links a { font-size: 1rem; }
+      nav.menu-open .nav-cta {
+        display: block; margin-top: 4px;
+        text-align: center; padding: 14px;
+      }
+
+      /* SECTIONS — reduce vertical padding */
+      section { padding: 72px 5%; }
+
+      /* HERO */
+      .hero { padding: 110px 5% 64px; }
+      .hero-logo { width: 80px; margin-bottom: 20px; }
+      .hero-stats { gap: 24px; margin-top: 44px; padding-top: 32px; }
+      .stat-num { font-size: 2rem; }
+      .hero-buttons { gap: 12px; }
+      .btn-primary, .btn-outline { padding: 14px 30px; }
+
+      /* ABOUT */
+      .about-inner {
+        grid-template-columns: 1fr;
+        gap: 40px; text-align: center;
+      }
+      .about-visual { justify-content: center; }
+      .about-values { justify-items: center; }
+      .section-desc { margin-left: auto; margin-right: auto; }
+
+      /* SERVICES */
+      .services-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+
+      /* PRICING */
+      .pricing-grid {
+        grid-template-columns: 1fr;
+        max-width: 420px; margin: 0 auto;
+        gap: 20px;
+      }
+      .price-card.featured { transform: none; }
+
+      /* STEPS */
+      .steps-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+      .steps-grid::before { display: none; }
+
+      /* PAYMENT */
+      .payment-grid { grid-template-columns: 1fr; gap: 24px; }
+
+      /* TESTIMONIALS */
+      .testi-grid { grid-template-columns: 1fr; gap: 18px; max-width: 520px; margin: 0 auto; }
+
+      /* CONTACT */
+      .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+      .contact-info { text-align: center; }
+      .contact-item { justify-content: center; text-align: left; }
+
+      /* FORM */
+      .form-card { padding: 32px 28px; }
+      .form-row { grid-template-columns: 1fr; gap: 0; }
+
+      /* FOOTER */
+      .footer-top {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+      }
+      .footer-top > .footer-brand { grid-column: 1 / -1; }
+    }
+
+    /* ════════════════════════════════════
+       RESPONSIVE — MOBILE  ≤ 600px
+    ════════════════════════════════════ */
+    @media (max-width: 600px) {
+      /* NAV */
+      nav { padding: 14px 4%; }
+      .nav-brand { font-size: 1.35rem; }
+      .nav-logo-svg { width: 34px; }
+      .theme-btn span:last-child { display: none; } /* hide label, keep icon */
+      .theme-btn { padding: 7px 10px; }
+
+      /* SECTIONS */
+      section { padding: 56px 4%; }
+
+      /* HERO */
+      .hero { padding: 96px 4% 56px; text-align: center; }
+      .hero-logo { width: 70px; margin-bottom: 16px; }
+      .hero-eyebrow { font-size: 0.68rem; letter-spacing: 0.18em; }
+      .hero-subtitle { font-size: 0.95rem; }
+      .hero-buttons { flex-direction: column; align-items: center; }
+      .btn-primary, .btn-outline { width: 100%; max-width: 300px; text-align: center; padding: 15px 24px; }
+      .hero-stats {
+        flex-direction: row; flex-wrap: wrap;
+        justify-content: center; gap: 20px 32px;
+        margin-top: 36px; padding-top: 28px;
+      }
+      .stat-num { font-size: 1.8rem; }
+      .stat-label { font-size: 0.68rem; }
+
+      /* RINGS — smaller on mobile */
+      .ring:nth-child(1) { width: 260px; height: 260px; }
+      .ring:nth-child(2) { width: 380px; height: 380px; }
+      .ring:nth-child(3) { width: 500px; height: 500px; }
+
+      /* ABOUT */
+      .about-lotus-wrap { width: 220px; height: 220px; }
+      .about-lotus-wrap svg { width: 120px; }
+      .about-badge { right: 0; font-size: 0.72rem; padding: 10px 14px; }
+      .about-values { grid-template-columns: 1fr; gap: 12px; }
+      .value-item { padding: 16px; }
+
+      /* SERVICES */
+      .services-grid { grid-template-columns: 1fr; gap: 16px; }
+      .service-card { padding: 28px 22px; }
+
+      /* PRICING */
+      .pricing-grid { max-width: 100%; }
+      .price-card { padding: 28px 22px; }
+      .price-amount { font-size: 2.4rem; }
+      .pricing-note { font-size: 0.78rem; padding: 0 4px; }
+
+      /* STEPS */
+      .steps-grid { grid-template-columns: 1fr; gap: 12px; }
+      .step-card { padding: 20px 16px; }
+
+      /* PAYMENT */
+      .payment-card { padding: 26px 20px; }
+      .bank-row { flex-direction: column; gap: 6px; align-items: flex-start; }
+      .bank-copy { align-self: flex-start; margin-top: 4px; }
+      .bank-value { text-align: left; max-width: 100%; }
+
+      /* TESTIMONIALS */
+      .testi-card { padding: 26px 20px; }
+      .testi-text { font-size: 1rem; }
+
+      /* CONTACT */
+      .contact-item { gap: 12px; }
+      .contact-ic { width: 38px; height: 38px; font-size: 0.95rem; }
+      .contact-item-val { font-size: 0.83rem; }
+
+      /* FORM */
+      .form-card { padding: 24px 18px; border-radius: 16px; }
+      .form-title { font-size: 1.5rem; margin-bottom: 20px; }
+      .form-group input,
+      .form-group select,
+      .form-group textarea { font-size: 16px; /* prevents iOS zoom */ padding: 12px 14px; }
+      .form-submit { font-size: 0.88rem; padding: 15px; }
+
+      /* SECTION LABELS & TITLES */
+      .section-title { font-size: clamp(1.9rem, 8vw, 2.6rem); }
+      .section-label { font-size: 0.68rem; }
+
+      /* FOOTER */
+      footer { padding: 48px 4% 28px; }
+      .footer-top { grid-template-columns: 1fr; gap: 28px; }
+      .footer-brand .nav-brand { font-size: 1.5rem; }
+      .footer-bottom {
+        flex-direction: column; text-align: center; gap: 10px;
+        padding-top: 20px;
+      }
+      .footer-legal { flex-wrap: wrap; justify-content: center; gap: 16px; }
+
+      /* MARQUEE — smaller text on mobile */
+      .marquee-item { font-size: 0.7rem; letter-spacing: 0.12em; }
+
+      /* TOAST */
+      .toast { left: 16px; right: 16px; bottom: 16px; font-size: 0.83rem; }
+    }
+
+    /* ════════════════════════════════════
+       RESPONSIVE — SMALL MOBILE  ≤ 380px
+    ════════════════════════════════════ */
+    @media (max-width: 380px) {
+      section { padding: 48px 4%; }
+      .hero { padding: 88px 4% 48px; }
+      .hero-logo { width: 60px; }
+      .hero-stats { gap: 14px 24px; }
+      .stat-num { font-size: 1.6rem; }
+      .form-card { padding: 20px 14px; }
+      .about-lotus-wrap { width: 180px; height: 180px; }
+      .about-lotus-wrap svg { width: 100px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <!-- Lotus SVG inline -->
+    <svg class="nav-logo-svg" viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Outer left petal -->
+      <path d="M20 78 Q5 50 22 28 Q30 50 38 68Z" fill="#2D6A4F" opacity="0.85"/>
+      <!-- Outer right petal -->
+      <path d="M100 78 Q115 50 98 28 Q90 50 82 68Z" fill="#2D6A4F" opacity="0.85"/>
+      <!-- Middle left petal -->
+      <path d="M34 78 Q18 46 36 20 Q46 46 52 68Z" fill="#40916C" opacity="0.9"/>
+      <!-- Middle right petal -->
+      <path d="M86 78 Q102 46 84 20 Q74 46 68 68Z" fill="#40916C" opacity="0.9"/>
+      <!-- Inner left petal -->
+      <path d="M48 80 Q34 48 52 12 Q56 48 58 72Z" fill="#52B788" opacity="0.85"/>
+      <!-- Inner right petal -->
+      <path d="M72 80 Q86 48 68 12 Q64 48 62 72Z" fill="#52B788" opacity="0.85"/>
+      <!-- Center petal -->
+      <path d="M60 82 Q44 52 60 4 Q76 52 60 82Z" fill="#7B3F54" opacity="0.88"/>
+      <!-- Inner glow -->
+      <path d="M60 70 Q54 50 60 20 Q66 50 60 70Z" fill="white" opacity="0.25"/>
+    </svg>
+    <span class="nav-brand">PlenaMente</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre mí</a></li>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#precios">Precios</a></li>
+    <li><a href="#pago">Pago</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-btn" id="themeToggle" onclick="toggleTheme()">
+      <span id="themeIcon">🌙</span>
+      <span id="themeLabel">Oscuro</span>
+    </button>
+    <a href="#contacto" class="nav-cta">Agendar consulta</a>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="inicio">
+  <div class="hero-bg"></div>
+  <div class="hero-rings">
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+  </div>
+  <div class="hero-content">
+    <!-- Large Lotus Logo -->
+    <svg class="hero-logo" viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 78 Q5 50 22 28 Q30 50 38 68Z" fill="#2D6A4F" opacity="0.85"/>
+      <path d="M100 78 Q115 50 98 28 Q90 50 82 68Z" fill="#2D6A4F" opacity="0.85"/>
+      <path d="M34 78 Q18 46 36 20 Q46 46 52 68Z" fill="#40916C" opacity="0.9"/>
+      <path d="M86 78 Q102 46 84 20 Q74 46 68 68Z" fill="#40916C" opacity="0.9"/>
+      <path d="M48 80 Q34 48 52 12 Q56 48 58 72Z" fill="#52B788" opacity="0.85"/>
+      <path d="M72 80 Q86 48 68 12 Q64 48 62 72Z" fill="#52B788" opacity="0.85"/>
+      <path d="M60 82 Q44 52 60 4 Q76 52 60 82Z" fill="#7B3F54" opacity="0.88"/>
+      <path d="M60 70 Q54 50 60 20 Q66 50 60 70Z" fill="white" opacity="0.25"/>
+    </svg>
+    <p class="hero-eyebrow">Consultas de Salud Mental · En Línea</p>
+    <h1 class="hero-title">
+      Tu bienestar<br>
+      comienza con <em>una sola</em><br>
+      conversación
+    </h1>
+    <p class="hero-subtitle">
+      Acompañamiento profesional y confidencial para sanar, crecer y vivir con plenitud. Sesiones individuales adaptadas a tus necesidades.
+    </p>
+    <div class="hero-buttons">
+      <a href="#contacto" class="btn-primary">Agendar primera sesión</a>
+      <a href="#servicios" class="btn-outline">Conocer servicios</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num">+200</span>
+        <span class="stat-label">Pacientes atendidos</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">5+</span>
+        <span class="stat-label">Años de experiencia</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">100%</span>
+        <span class="stat-label">Confidencial</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MARQUEE ── -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span class="marquee-item">Terapia Individual</span>
+    <span class="marquee-item">Manejo de Ansiedad</span>
+    <span class="marquee-item">Mindfulness</span>
+    <span class="marquee-item">Inteligencia Emocional</span>
+    <span class="marquee-item">Duelo y Pérdida</span>
+    <span class="marquee-item">Autoestima</span>
+    <span class="marquee-item">Relaciones</span>
+    <span class="marquee-item">Bienestar Mental</span>
+    <span class="marquee-item">Terapia Individual</span>
+    <span class="marquee-item">Manejo de Ansiedad</span>
+    <span class="marquee-item">Mindfulness</span>
+    <span class="marquee-item">Inteligencia Emocional</span>
+    <span class="marquee-item">Duelo y Pérdida</span>
+    <span class="marquee-item">Autoestima</span>
+    <span class="marquee-item">Relaciones</span>
+    <span class="marquee-item">Bienestar Mental</span>
+  </div>
+</div>
+
+<!-- ── ABOUT ── -->
+<section class="about" id="sobre">
+  <div class="about-inner">
+    <div class="about-visual reveal">
+      <div class="about-lotus-wrap">
+        <svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 78 Q5 50 22 28 Q30 50 38 68Z" fill="#2D6A4F" opacity="0.85"/>
+          <path d="M100 78 Q115 50 98 28 Q90 50 82 68Z" fill="#2D6A4F" opacity="0.85"/>
+          <path d="M34 78 Q18 46 36 20 Q46 46 52 68Z" fill="#40916C" opacity="0.9"/>
+          <path d="M86 78 Q102 46 84 20 Q74 46 68 68Z" fill="#40916C" opacity="0.9"/>
+          <path d="M48 80 Q34 48 52 12 Q56 48 58 72Z" fill="#52B788" opacity="0.85"/>
+          <path d="M72 80 Q86 48 68 12 Q64 48 62 72Z" fill="#52B788" opacity="0.85"/>
+          <path d="M60 82 Q44 52 60 4 Q76 52 60 82Z" fill="#7B3F54" opacity="0.88"/>
+        </svg>
+        <div class="about-badge">Sesiones<br>100% en línea<br>🌿</div>
+      </div>
+    </div>
+    <div class="about-text">
+      <p class="section-label reveal">Sobre PlenaMente</p>
+      <h2 class="section-title reveal reveal-delay-1">Un espacio seguro<br>para <em>sanar y crecer</em></h2>
+      <p class="section-desc reveal reveal-delay-2">
+        En PlenaMente ofrecemos atención psicológica profesional a través de un entorno cálido, confidencial y libre de juicios. Nuestro objetivo es acompañarte en cada etapa de tu proceso, brindando herramientas prácticas para mejorar tu bienestar emocional y mental.
+      </p>
+      <div class="about-values reveal reveal-delay-3">
+        <div class="value-item">
+          <div class="value-icon">🤝</div>
+          <div class="value-name">Confidencialidad</div>
+          <div class="value-desc">Todo lo que compartes permanece entre nosotros.</div>
+        </div>
+        <div class="value-item">
+          <div class="value-icon">💚</div>
+          <div class="value-name">Sin juicios</div>
+          <div class="value-desc">Un espacio donde puedes ser tú mismo completamente.</div>
+        </div>
+        <div class="value-item">
+          <div class="value-icon">🧠</div>
+          <div class="value-name">Enfoque integral</div>
+          <div class="value-desc">Mente, emociones y bienestar en equilibrio.</div>
+        </div>
+        <div class="value-item">
+          <div class="value-icon">🌐</div>
+          <div class="value-name">100% en línea</div>
+          <div class="value-desc">Desde la comodidad de tu hogar, sin desplazamientos.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SERVICES ── -->
+<section class="services" id="servicios">
+  <div class="services-inner">
+    <div class="section-header" style="max-width:600px;">
+      <p class="section-label reveal">Servicios</p>
+      <h2 class="section-title reveal reveal-delay-1">Lo que podemos<br><em>trabajar juntos</em></h2>
+      <p class="section-desc reveal reveal-delay-2">Cada persona es única. Por eso cada proceso terapéutico se adapta a ti, tus necesidades y tus tiempos.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon">🧘</div>
+        <div class="service-name">Terapia Individual</div>
+        <p class="service-desc">Espacio personalizado para trabajar tus emociones, pensamientos y patrones de conducta a tu propio ritmo.</p>
+        <span class="service-tag">1 sesión / 1 hora</span>
+      </div>
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-icon">😰</div>
+        <div class="service-name">Ansiedad y Estrés</div>
+        <p class="service-desc">Técnicas basadas en evidencia para reducir la ansiedad, el estrés crónico y los pensamientos intrusivos.</p>
+        <span class="service-tag">Psicoterapia cognitiva</span>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-icon">💔</div>
+        <div class="service-name">Duelo y Pérdida</div>
+        <p class="service-desc">Acompañamiento empático para transitar procesos de duelo, separación y cambios de vida significativos.</p>
+        <span class="service-tag">Acompañamiento integral</span>
+      </div>
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-icon">🌱</div>
+        <div class="service-name">Autoestima y Autoconocimiento</div>
+        <p class="service-desc">Reconecta contigo mismo, fortalece tu autoestima y desarrolla una relación más compasiva contigo.</p>
+        <span class="service-tag">Crecimiento personal</span>
+      </div>
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-icon">🌙</div>
+        <div class="service-name">Mindfulness y Bienestar</div>
+        <p class="service-desc">Prácticas de atención plena para reducir el ruido mental, mejorar el sueño y vivir más conectado al presente.</p>
+        <span class="service-tag">Técnicas basadas en evidencia</span>
+      </div>
+      <div class="service-card reveal reveal-delay-3">
+        <div class="service-icon">👫</div>
+        <div class="service-name">Relaciones y Vínculos</div>
+        <p class="service-desc">Mejora tus relaciones personales y profesionales, aprende a poner límites y a comunicarte con asertividad.</p>
+        <span class="service-tag">Habilidades sociales</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRICING ── -->
+<section class="pricing" id="precios">
+  <div class="pricing-inner">
+    <div class="section-header" style="text-align:center; max-width: 600px; margin: 0 auto 64px;">
+      <p class="section-label reveal">Precios</p>
+      <h2 class="section-title reveal reveal-delay-1">Inversión en tu<br><em>bienestar mental</em></h2>
+      <p class="section-desc reveal reveal-delay-2" style="margin: 0 auto;">Precios accesibles para que el apoyo que necesitas esté siempre al alcance.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="price-card reveal">
+        <div class="price-name">Sesión única</div>
+        <div class="price-amount">
+          <span class="price-currency">$</span>600
+        </div>
+        <div class="price-period">MXN · por sesión de 1 hora</div>
+        <div class="price-usd">≈ USD $30 <span style="font-size:0.72rem;opacity:0.7;">(referencia, según tipo de cambio)</span></div>
+        <div class="price-sessions">1 consulta</div>
+        <hr class="price-divider">
+        <ul class="price-features">
+          <li class="price-feature">1 sesión individual de 60 min</li>
+          <li class="price-feature">Por videollamada (Zoom / Meet)</li>
+          <li class="price-feature">Notas y recursos post-sesión</li>
+          <li class="price-feature">Confidencialidad total</li>
+        </ul>
+        <a href="#contacto" class="btn-book">Reservar sesión</a>
+      </div>
+
+      <div class="price-card featured reveal reveal-delay-1">
+        <div class="price-badge">Más popular ✦</div>
+        <div class="price-name">Paquete mensual</div>
+        <div class="price-amount">
+          <span class="price-currency">$</span>2,000
+        </div>
+        <div class="price-period">MXN · 4 sesiones al mes</div>
+        <div class="price-usd" style="color:rgba(255,255,255,0.55);">≈ USD $100 · Ahorras $400 MXN</div>
+        <div class="price-sessions">4 consultas (1/semana)</div>
+        <hr class="price-divider">
+        <ul class="price-features">
+          <li class="price-feature">4 sesiones de 60 min c/u</li>
+          <li class="price-feature">Seguimiento semanal continuo</li>
+          <li class="price-feature">Material terapéutico incluido</li>
+          <li class="price-feature">Contacto entre sesiones vía correo</li>
+        </ul>
+        <a href="#contacto" class="btn-book">Empezar este mes</a>
+      </div>
+
+      <div class="price-card reveal reveal-delay-2">
+        <div class="price-name">Paquete bimestral</div>
+        <div class="price-amount">
+          <span class="price-currency">$</span>3,600
+        </div>
+        <div class="price-period">MXN · 8 sesiones (2 meses)</div>
+        <div class="price-usd">≈ USD $180 · Ahorras $1,200 MXN</div>
+        <div class="price-sessions">8 consultas al precio de 6</div>
+        <hr class="price-divider">
+        <ul class="price-features">
+          <li class="price-feature">8 sesiones de 60 min c/u</li>
+          <li class="price-feature">Mayor continuidad y avance</li>
+          <li class="price-feature">Plan terapéutico personalizado</li>
+          <li class="price-feature">Recursos y ejercicios entre sesiones</li>
+        </ul>
+        <a href="#contacto" class="btn-book">Reservar paquete</a>
+      </div>
+    </div>
+    <p class="pricing-note reveal">
+      ✦ Tasas de cambio aproximadas, pueden variar diariamente. &nbsp;·&nbsp;
+      ¿Tienes dudas? <a href="mailto:contacto@plenamente.mx">Escríbenos</a> y resolvemos tus preguntas.&nbsp;·&nbsp;
+      Todos los precios incluyen IVA.
+    </p>
+  </div>
+</section>
+
+<!-- ── HOW IT WORKS ── -->
+<section class="how">
+  <div class="how-inner">
+    <div class="section-header" style="text-align:center; max-width:560px; margin: 0 auto 64px;">
+      <p class="section-label reveal">¿Cómo funciona?</p>
+      <h2 class="section-title reveal reveal-delay-1">Comenzar es<br><em>más fácil de lo que crees</em></h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card reveal">
+        <div class="step-num">01</div>
+        <div class="step-title">Escríbenos</div>
+        <p class="step-desc">Contáctanos por correo o llena el formulario. Cuéntanos brevemente cómo te sientes.</p>
+      </div>
+      <div class="step-card reveal reveal-delay-1">
+        <div class="step-num">02</div>
+        <div class="step-title">Agendamos</div>
+        <p class="step-desc">Te enviamos un horario disponible y confirmamos fecha y hora de tu primera sesión.</p>
+      </div>
+      <div class="step-card reveal reveal-delay-2">
+        <div class="step-num">03</div>
+        <div class="step-title">Realizas el pago</div>
+        <p class="step-desc">Paga vía transferencia bancaria (SPEI). Una vez confirmado, tu sesión queda reservada.</p>
+      </div>
+      <div class="step-card reveal reveal-delay-3">
+        <div class="step-num">04</div>
+        <div class="step-title">Tu sesión</div>
+        <p class="step-desc">Nos conectamos por videollamada en un espacio privado, seguro y completamente confidencial.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PAYMENT ── -->
+<section class="payment" id="pago">
+  <div class="payment-inner">
+    <div class="section-header">
+      <p class="section-label reveal">Métodos de pago</p>
+      <h2 class="section-title reveal reveal-delay-1">Pago seguro y<br><em>sin complicaciones</em></h2>
+      <p class="section-desc reveal reveal-delay-2">Aceptamos transferencias bancarias (SPEI). Una vez realizado el pago, envíanos tu comprobante al correo para confirmar tu sesión.</p>
+    </div>
+    <div class="payment-grid">
+      <div class="payment-card reveal">
+        <div class="payment-icon">🏦</div>
+        <div class="payment-title">Transferencia SPEI</div>
+        <div class="bank-detail">
+          <div class="bank-row">
+            <div>
+              <div class="bank-label">Banco</div>
+              <div class="bank-value">BBVA / CLABE</div>
+            </div>
+            <button class="bank-copy" onclick="copyText('BBVA / CLABE', this)">Copiar</button>
+          </div>
+          <div class="bank-row">
+            <div>
+              <div class="bank-label">CLABE Interbancaria</div>
+              <div class="bank-value" id="clabe-val">012 345 678 901 234 567</div>
+            </div>
+            <button class="bank-copy" onclick="copyText('012345678901234567', this)">Copiar</button>
+          </div>
+          <div class="bank-row">
+            <div>
+              <div class="bank-label">Beneficiario</div>
+              <div class="bank-value">PlenaMente Salud Mental</div>
+            </div>
+          </div>
+          <div class="bank-row">
+            <div>
+              <div class="bank-label">Referencia</div>
+              <div class="bank-value">Tu nombre + fecha de sesión</div>
+            </div>
+          </div>
+        </div>
+        <div class="payment-note">
+          📩 Envía tu comprobante a <strong>contacto@plenamente.mx</strong> para confirmar tu sesión en menos de 24 horas.
+        </div>
+      </div>
+
+      <div class="payment-card reveal reveal-delay-1">
+        <div class="payment-icon">💳</div>
+        <div class="payment-title">Otros métodos</div>
+        <div class="bank-detail">
+          <div class="bank-row">
+            <div>
+              <div class="bank-label">Tarjeta de crédito / débito</div>
+              <div class="bank-value">Disponible vía enlace de pago (Stripe)</div>
+            </div>
+          </div>
+          <div class="bank-row">
+            <div>
+              <div class="bank-label">PayPal</div>
+              <div class="bank-value">Solicitar enlace al correo</div>
+            </div>
+          </div>
+          <div class="bank-row">
+            <div>
+              <div class="bank-label">Depósito en efectivo</div>
+              <div class="bank-value">OXXO Pay / tiendas de conveniencia</div>
+            </div>
+          </div>
+          <div class="bank-row">
+            <div>
+              <div class="bank-label">USD / Dólares</div>
+              <div class="bank-value">Wise o PayPal (tipo de cambio del día)</div>
+            </div>
+          </div>
+        </div>
+        <div class="payment-note">
+          🌎 ¿Pagas desde el extranjero? Contáctanos y te enviamos un enlace de cobro en dólares (USD).
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section class="testimonials">
+  <div class="testimonials-inner">
+    <div class="section-header" style="text-align:center; max-width:560px; margin: 0 auto 64px;">
+      <p class="section-label reveal">Testimonios</p>
+      <h2 class="section-title reveal reveal-delay-1">Lo que dicen<br><em>nuestros pacientes</em></h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Encontré en PlenaMente el espacio que tanto necesitaba. Las sesiones me han dado herramientas reales para manejar mi ansiedad. El proceso ha sido transformador."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">AL</div>
+          <div>
+            <div class="testi-name">Ana L.</div>
+            <div class="testi-info">Paciente desde hace 6 meses</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-1">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Lo que más valoro es la confidencialidad y el trato humano. Se siente como hablar con alguien que genuinamente quiere que estés bien, no solo cumplir una sesión."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">CR</div>
+          <div>
+            <div class="testi-name">Carlos R.</div>
+            <div class="testi-info">Paciente desde hace 3 meses</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-2">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Vivo en Estados Unidos y poder tener sesiones en español con alguien de confianza ha sido invaluable. Los precios son muy accesibles para la calidad que ofrecen."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">MV</div>
+          <div>
+            <div class="testi-name">Mariana V.</div>
+            <div class="testi-info">Paciente desde hace 1 año · EUA</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section class="contact" id="contacto">
+  <div class="contact-inner">
+    <div class="contact-info">
+      <p class="section-label reveal">Contacto</p>
+      <h2 class="section-title reveal reveal-delay-1">¿Listo para<br><em>dar el primer paso?</em></h2>
+      <p class="section-desc reveal reveal-delay-2">
+        Escríbenos y con gusto te orientamos. No necesitas saber exactamente qué necesitas, para eso estamos aquí.
+      </p>
+      <div style="margin-top: 36px;">
+        <div class="contact-item reveal reveal-delay-1">
+          <div class="contact-ic">✉️</div>
+          <div>
+            <div class="contact-item-label">Correo electrónico</div>
+            <div class="contact-item-val"><a href="mailto:contacto@plenamente.mx">contacto@plenamente.mx</a></div>
+          </div>
+        </div>
+        <div class="contact-item reveal reveal-delay-2">
+          <div class="contact-ic">⏰</div>
+          <div>
+            <div class="contact-item-label">Horario de atención</div>
+            <div class="contact-item-val">Lunes a Viernes · 9:00 AM – 7:00 PM (CDMX)</div>
+          </div>
+        </div>
+        <div class="contact-item reveal reveal-delay-3">
+          <div class="contact-ic">💻</div>
+          <div>
+            <div class="contact-item-label">Plataforma</div>
+            <div class="contact-item-val">Zoom · Google Meet · Microsoft Teams</div>
+          </div>
+        </div>
+        <div class="contact-item reveal reveal-delay-4">
+          <div class="contact-ic">🌎</div>
+          <div>
+            <div class="contact-item-label">Modalidad</div>
+            <div class="contact-item-val">100% en línea · Pacientes de México y el extranjero</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card reveal reveal-delay-2">
+      <div class="form-title">Agenda tu consulta</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nombre</label>
+          <input type="text" placeholder="Tu nombre" id="fname">
+        </div>
+        <div class="form-group">
+          <label>Apellido</label>
+          <input type="text" placeholder="Tu apellido" id="lname">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Correo electrónico</label>
+        <input type="email" placeholder="correo@ejemplo.com" id="femail">
+      </div>
+      <div class="form-group">
+        <label>WhatsApp / Teléfono (opcional)</label>
+        <input type="tel" placeholder="+52 55 1234 5678" id="fphone">
+      </div>
+      <div class="form-group">
+        <label>Servicio de interés</label>
+        <select id="fservice">
+          <option value="">Selecciona una opción</option>
+          <option>Terapia individual (sesión única)</option>
+          <option>Paquete mensual (4 sesiones)</option>
+          <option>Paquete bimestral (8 sesiones)</option>
+          <option>Ansiedad y estrés</option>
+          <option>Duelo y pérdida</option>
+          <option>Autoestima y autoconocimiento</option>
+          <option>Mindfulness y bienestar</option>
+          <option>No sé aún / necesito orientación</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>¿Cómo te puedo ayudar?</label>
+        <textarea id="fmessage" placeholder="Cuéntame brevemente cómo te sientes o qué te gustaría trabajar. No hay respuesta incorrecta."></textarea>
+      </div>
+      <button class="form-submit" onclick="handleSubmit()">Enviar solicitud ✦</button>
+      <p class="form-privacy">
+        🔒 Tu información es 100% confidencial y nunca será compartida con terceros.<br>
+        Responderemos tu solicitud en menos de 24 horas.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="nav-brand">PlenaMente</div>
+        <p class="footer-slogan">Mente sana, vida plena</p>
+        <p style="font-size:0.82rem; line-height:1.7; color:rgba(255,255,255,0.5);">Servicio profesional de atención psicológica en línea. Acompañamos tu proceso con ética, calidez y compromiso.</p>
+        <div class="footer-social">
+          <a href="#" class="social-btn" title="Instagram">📸</a>
+          <a href="#" class="social-btn" title="Facebook">📘</a>
+          <a href="mailto:contacto@plenamente.mx" class="social-btn" title="Email">✉️</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Servicios</h4>
+        <ul>
+          <li><a href="#servicios">Terapia individual</a></li>
+          <li><a href="#servicios">Ansiedad y estrés</a></li>
+          <li><a href="#servicios">Duelo y pérdida</a></li>
+          <li><a href="#servicios">Autoestima</a></li>
+          <li><a href="#servicios">Mindfulness</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Información</h4>
+        <ul>
+          <li><a href="#precios">Precios y paquetes</a></li>
+          <li><a href="#pago">Métodos de pago</a></li>
+          <li><a href="#sobre">¿Cómo funciona?</a></li>
+          <li><a href="#contacto">Agendar sesión</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="mailto:contacto@plenamente.mx">contacto@plenamente.mx</a></li>
+          <li><a href="#">Lun–Vie: 9AM – 7PM (CDMX)</a></li>
+          <li><a href="#">Sesiones en línea (Zoom / Meet)</a></li>
+          <li><a href="#contacto">Enviar mensaje</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 PlenaMente · Todos los derechos reservados.</span>
+      <div class="footer-legal">
+        <a href="#">Aviso de privacidad</a>
+        <a href="#">Términos de servicio</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span>✅</span>
+  <span id="toast-msg">Mensaje enviado. Te contactaremos pronto.</span>
+</div>
+
+<script>
+  // Theme toggle
+  function toggleTheme() {
+    const html = document.documentElement;
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    document.getElementById('themeIcon').textContent = isDark ? '🌙' : '☀️';
+    document.getElementById('themeLabel').textContent = isDark ? 'Oscuro' : 'Claro';
+  }
+
+  // Hamburger
+  function toggleMenu() {
+    document.getElementById('navbar').classList.toggle('menu-open');
+  }
+
+  // Navbar scroll effect
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    if (window.scrollY > 60) {
+      nav.style.padding = '12px 5%';
+    } else {
+      nav.style.padding = '18px 5%';
+    }
+  });
+
+  // Intersection observer for reveal
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        revealObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // Copy to clipboard
+  async function copyText(text, btn) {
+    try {
+      await navigator.clipboard.writeText(text);
+      const original = btn.textContent;
+      btn.textContent = '✓ Copiado';
+      btn.style.color = '#52B788';
+      setTimeout(() => {
+        btn.textContent = original;
+        btn.style.color = '';
+      }, 2000);
+    } catch {}
+  }
+
+  // Form submit
+  function handleSubmit() {
+    const name = document.getElementById('fname').value.trim();
+    const email = document.getElementById('femail').value.trim();
+    if (!name || !email) {
+      showToast('⚠️ Por favor ingresa tu nombre y correo.', '#8B4A5A');
+      return;
+    }
+    if (!email.includes('@')) {
+      showToast('⚠️ Ingresa un correo válido.', '#8B4A5A');
+      return;
+    }
+    // Send to mailto
+    const service = document.getElementById('fservice').value;
+    const msg = document.getElementById('fmessage').value;
+    const subject = encodeURIComponent('Solicitud de consulta - PlenaMente');
+    const body = encodeURIComponent(`Nombre: ${name} ${document.getElementById('lname').value}\nCorreo: ${email}\nTeléfono: ${document.getElementById('fphone').value}\nServicio: ${service}\n\nMensaje:\n${msg}`);
+    window.location.href = `mailto:contacto@plenamente.mx?subject=${subject}&body=${body}`;
+    showToast('✅ Abriendo tu correo... ¡Nos vemos pronto!');
+  }
+
+  function showToast(msg, bg) {
+    const t = document.getElementById('toast');
+    document.getElementById('toast-msg').textContent = msg;
+    if (bg) t.style.background = bg;
+    else t.style.background = '';
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 4000);
+  }
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        document.getElementById('navbar').classList.remove('menu-open');
+      }
+    });
+  });
+</script>
+</body>
+</html>
